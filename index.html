@@ -3,116 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Akhil & Pooja (Vahali)</title>
+    <title>Akhil & Pooja | Vahali</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;600;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --rose: #ff4d6d;
-            --true-red: #ff0000;
             --deep-wine: #590d22;
             --light-pink: #fff0f3;
+            --glass: rgba(255, 255, 255, 0.96);
         }
 
+        /* Essential Fixes */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
         body { 
-            font-family: 'Montserrat', sans-serif; 
-            background: var(--light-pink);
-            color: var(--deep-wine);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+            background: var(--light-pink); font-family: 'Montserrat', sans-serif;
+            color: var(--deep-wine); overflow-x: hidden; scroll-behavior: smooth;
         }
+        ::-webkit-scrollbar { display: none; }
 
         #bg-stage { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
 
-        /* NAVIGATION DOTS */
+        /* Navigation */
         .nav-dots {
-            position: fixed; left: 15px; top: 50%; transform: translateY(-50%);
-            display: flex; flex-direction: column; gap: 20px; z-index: 1000;
+            position: fixed; right: 15px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 15px; z-index: 1000;
         }
         .heart-dot {
-            width: 18px; height: 18px; background: var(--true-red);
+            width: 14px; height: 14px; background: var(--rose);
             clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
-            opacity: 0.15; transition: 0.4s; cursor: pointer;
+            opacity: 0.2; transition: 0.4s; cursor: pointer;
         }
-        .heart-dot.active { opacity: 1; transform: scale(1.6); filter: drop-shadow(0 0 5px red); }
+        .heart-dot.active { opacity: 1; transform: scale(1.6); filter: drop-shadow(0 0 5px var(--rose)); }
 
         .slide {
             position: relative; min-height: 100vh; width: 100vw;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 5; text-align: center; padding: 40px 20px;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 5; padding: 20px;
         }
 
-        /* 3D HEART */
-        .scene-3d { width: 150px; height: 150px; perspective: 1000px; margin: 20px 0; cursor: pointer; }
-        .heart-3d {
-            position: relative; width: 80px; height: 80px; transform-style: preserve-3d;
-            animation: rotate3D 5s infinite linear; margin: 0 auto;
-        }
-        .heart-layer { position: absolute; width: 80px; height: 80px; background: var(--true-red); transform: rotate(-45deg); }
-        .heart-layer::before, .heart-layer::after { content: ''; width: 80px; height: 80px; background: var(--true-red); border-radius: 50%; position: absolute; }
-        .heart-layer::before { top: -40px; left: 0; }
-        .heart-layer::after { left: 40px; top: 0; }
-        @keyframes rotate3D { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
-
-        /* GLASS CARD */
         .glass-card {
-            background: rgba(255, 255, 255, 0.92); padding: 35px 20px; border-radius: 40px;
-            width: 100%; max-width: 450px; box-shadow: 0 20px 40px rgba(255, 77, 109, 0.15);
-            transition: 0.5s; position: relative;
+            background: var(--glass); backdrop-filter: blur(12px);
+            padding: 25px 20px; border-radius: 30px;
+            width: 100%; max-width: 400px;
+            box-shadow: 0 20px 50px rgba(255, 77, 109, 0.15);
+            text-align: center; border: 1px solid rgba(255,255,255,0.9);
         }
 
-        /* ICON ANIMATIONS */
-        #d-icon { font-size: 5.5rem; margin: 15px; display: inline-block; }
-        .animate-sway { animation: sway 3s infinite ease-in-out; }
-        .animate-wobble { animation: wobble 1s infinite; }
-        .animate-heartbeat { animation: heartbeat 1.2s infinite ease-in-out; }
-        .animate-float { animation: floatIcon 3s infinite ease-in-out; }
-
-        @keyframes sway { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
-        @keyframes wobble { 0%, 100% { transform: rotate(5deg); } 50% { transform: rotate(-5deg); } }
-        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-        @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-
-        /* MEMORY IMAGE AREA (LARGER) */
-        .image-container {
-            width: 100%;
-            height: 280px; /* Increased height */
-            border-radius: 25px;
-            overflow: hidden;
-            margin: 15px 0;
-            background: #fff;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            border: 8px solid white; /* Polaroid style */
+        /* VALENTINE ANIMATION */
+        .icon-bounce { 
+            font-size: 5rem; margin: 15px; display: inline-block;
         }
-        #m-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s ease; }
-
-        /* PASSWORD OVERLAY */
-        #lock-screen {
-            position: absolute; inset: 0; background: rgba(255, 240, 243, 0.98);
-            z-index: 100; border-radius: 40px; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; padding: 20px;
+        .animate-magic { animation: magicPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes magicPop {
+            0% { transform: scale(0.3) rotate(-20deg); opacity: 0; }
+            50% { transform: scale(1.1) rotate(10deg); }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
         }
+
+        /* SMOOTH GALLERY TRANSITION */
+        .img-frame { 
+            width: 100%; height: 230px; border-radius: 20px; overflow: hidden; 
+            border: 5px solid #fff; box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
+            margin-bottom: 15px; position: relative; background: #fef2f4;
+        }
+        #m-img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; 
+            opacity: 1;
+        }
+        .img-fade { opacity: 0 !important; transform: scale(0.95); }
+
+        /* JOURNEY GRID */
+        .journey-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+            max-height: 180px; overflow-y: auto; padding: 10px;
+            background: rgba(0,0,0,0.03); border-radius: 20px; margin-top: 15px;
+        }
+        .day-tab {
+            background: #fff; border: 1.5px solid var(--rose); padding: 8px 2px;
+            border-radius: 12px; cursor: pointer; transition: 0.3s;
+        }
+        .day-tab span { display: block; }
+        .d-lbl { font-size: 0.6rem; color: #999; text-transform: uppercase; }
+        .d-num { font-size: 0.85rem; font-weight: 800; color: var(--rose); }
+        .day-tab.active { background: var(--rose); transform: scale(1.05); border-color: var(--rose); }
+        .day-tab.active span { color: #fff; }
+
+        .display-area {
+            background: #fff; border-radius: 20px; padding: 15px; margin-bottom: 10px;
+            border-left: 5px solid var(--rose); text-align: left; min-height: 110px;
+        }
+
+        .mem-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .mem-btn {
+            background: #fff; border: 1.5px solid var(--rose); padding: 10px;
+            border-radius: 12px; color: var(--rose); font-size: 0.7rem; font-weight: 800; cursor: pointer;
+        }
+        .mem-btn.active { background: var(--rose); color: #fff; }
+
+        .primary-btn {
+            background: var(--rose); color: #fff; border: none;
+            padding: 14px 35px; border-radius: 50px; font-weight: 800;
+            cursor: pointer; margin-top: 15px; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+        }
+
         .pass-input {
-            border: 2px solid var(--rose); padding: 12px; border-radius: 25px;
-            width: 80%; text-align: center; margin: 15px 0; outline: none; font-weight: 600;
+            border: 2px solid var(--rose); padding: 15px; border-radius: 20px;
+            width: 80%; text-align: center; margin: 20px 0; outline: none;
         }
-
         .hidden { display: none !important; }
-        .blurred { filter: blur(12px); pointer-events: none; }
-
-        /* MEMORY GRID */
-        .m-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
-        .m-btn {
-            background: white; border: 1.5px solid var(--rose); padding: 12px 5px;
-            border-radius: 15px; color: var(--rose); font-weight: 800; font-size: 11px; cursor: pointer;
-        }
-        .m-btn.active { background: var(--rose); color: white; transform: scale(1.05); }
-
-        .scroll-hint { position: absolute; bottom: 20px; animation: float 2s infinite; cursor: pointer; color: var(--rose); font-weight: 900; font-size: 0.7rem; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
     </style>
 </head>
 <body>
@@ -124,82 +125,71 @@
         <div class="heart-dot" onclick="jump(1)"></div>
         <div class="heart-dot" onclick="jump(2)"></div>
         <div class="heart-dot" onclick="jump(3)"></div>
+        <div class="heart-dot" onclick="jump(4)"></div>
     </div>
 
-    <section id="home" class="slide">
-        <div class="scene-3d" onclick="jump(1)">
-            <div class="heart-3d">
-                <div class="heart-layer" style="transform: rotate(-45deg) translateZ(0px)"></div>
-                <div class="heart-layer" style="transform: rotate(-45deg) translateZ(8px); opacity:0.8;"></div>
-                <div class="heart-layer" style="transform: rotate(-45deg) translateZ(-8px); opacity:0.8;"></div>
-            </div>
-        </div>
-        <h1 style="font-family:'Dancing Script'; font-size: 5rem; color: var(--rose);">Vahali</h1>
-        <p style="letter-spacing: 5px;">AKHIL & POOJA</p>
-        <div class="scroll-hint" onclick="jump(1)">SCROLL DOWN FOR LOVE <br> <span style="font-size: 1.5rem;">♥</span></div>
-    </section>
-
-    <section id="week" class="slide">
-        <div class="glass-card">
-            <h2 style="font-family:'Dancing Script'; color: var(--rose); font-size: 2.5rem;">Vahali</h2>
-            <div id="d-icon" class="animate-sway">🌹</div>
-            <h3 id="d-name" style="font-size: 1.8rem;">Rose Day</h3>
-            <p id="d-text" style="margin: 10px 0; font-weight: 300;">Vahali, you are the blossom that never fades in my heart.</p>
-            <button onclick="nextDay()" style="background: var(--rose); color: white; border: none; padding: 15px 35px; border-radius: 50px; font-weight: 900; cursor: pointer;">Next Day ➜</button>
+    <section class="slide">
+        <div style="text-align: center;">
+            <h1 style="font-family:'Dancing Script'; font-size: 5rem; color: var(--rose);">Vahali</h1>
+            <p style="letter-spacing: 10px; font-weight: 300; margin-top: -10px;">AKHIL & POOJA</p>
         </div>
     </section>
 
-    <section id="ask" class="slide">
+    <section class="slide">
         <div class="glass-card">
-            <h2 style="font-family:'Dancing Script'; color: var(--rose); font-size: 2.5rem;">Vahali</h2>
-            <h1 style="font-size: 1.8rem; margin: 20px 0;">Will you be my Valentine?</h1>
-            <div style="position:relative; height:100px; margin-top:20px;">
-                <button onclick="jump(3)" style="position:absolute; left:10px; background: var(--rose); color: white; border: none; padding: 15px 35px; border-radius: 50px; font-weight: 900;">YES!</button>
-                <button id="no-btn" onmouseover="dodge()" style="position:absolute; right:10px; background: #ddd; color: #666; border: none; padding: 15px 35px; border-radius: 50px;">NO</button>
+            <h2 style="font-family:'Dancing Script'; color: var(--rose); font-size: 2.2rem;">Valentine Week</h2>
+            <div id="d-icon" class="icon-bounce">🌹</div>
+            <h3 id="d-name">Rose Day</h3>
+            <p id="d-text" style="font-size: 0.85rem; margin-top: 10px; color: #555; height: 40px;">Vahali, you are the blossom that never fades.</p>
+            <button class="primary-btn" onclick="nextDay()">Next Magic Day ➜</button>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="glass-card">
+            <h1 style="font-size: 1.6rem; margin-bottom: 20px;">Will you be my Valentine?</h1>
+            <div style="position:relative; height:100px;">
+                <button class="primary-btn" onclick="jump(3)" style="position:absolute; left:20px;">YES!</button>
+                <button id="no-btn" onmouseover="dodge()" style="position:absolute; right:20px; padding: 14px 35px; border-radius: 50px; border: none; background: #eee;">No</button>
             </div>
         </div>
     </section>
 
-    <section id="memories" class="slide">
-        <div class="glass-card" style="overflow: hidden; min-height: 600px;">
+    <section class="slide">
+        <div class="glass-card">
             <div id="lock-screen">
-                <span style="font-size: 3rem;">🔒</span>
-                <h3 style="margin-top: 10px;">Our Private Gallery</h3>
-                <input type="password" id="passInput" class="pass-input" placeholder="Password...">
-                <button onclick="checkPass()" style="background: var(--rose); color: white; border: none; padding: 10px 30px; border-radius: 20px; font-weight: 800;">Unlock Memories</button>
-                <p id="error-msg" style="color: red; font-size: 0.6rem; margin-top: 10px; display: none;">Try again, Vahali! 💔</p>
+                <span style="font-size: 3.5rem;">🔒</span>
+                <h3 style="margin-top: 10px;">Secret Gallery</h3>
+                <input type="password" id="passInput" class="pass-input" placeholder="Password">
+                <button class="primary-btn" onclick="checkPass()">Unlock</button>
             </div>
+            <div id="gallery-content" class="hidden">
+                <div class="img-frame"><img id="m-img" src="Images/meet.jpg"></div>
+                <h3 id="m-title" style="color: var(--rose);">First Meet</h3>
+                <p id="m-desc" style="font-size: 0.8rem; margin: 8px 0; color: #666; height: 35px;"></p>
+                <div class="mem-grid" id="m-btns"></div>
+            </div>
+        </div>
+    </section>
 
-            <div id="memory-content" class="blurred">
-                <h2 style="font-family:'Dancing Script'; color: var(--rose); font-size: 2.2rem;">Vahali</h2>
-                <div class="image-container">
-                    <img id="m-img" src="Images/meet.jpg">
-                </div>
-                <h3 id="m-title" style="font-size: 1.5rem; margin-top: 5px;">First Meet</h3>
-                <p id="m-desc" style="font-size: 0.85rem; height: 45px; margin-bottom: 10px;">The day I found my soulmate, Vahali.</p>
-                <div class="m-grid" id="m-btns"></div>
+    <section class="slide">
+        <div class="glass-card">
+            <h2 style="font-family:'Dancing Script'; color: var(--rose); font-size: 2.2rem;">Our Journey</h2>
+            <div class="display-area">
+                <h4 id="j-title" style="color: var(--rose); margin-bottom: 5px;">Day 41 Summary</h4>
+                <p id="j-desc" style="font-size: 0.8rem; line-height: 1.5; color: #444;"></p>
             </div>
+            <div class="journey-grid" id="j-grid"></div>
         </div>
     </section>
 
     <script>
-        const days = [
-            {n:"Rose Day", i:"🌹", t:"Vahali, you are the blossom that never fades.", a:"animate-sway"},
-            {n:"Propose Day", i:"💍", t:"Every heartbeat says I want you forever, Vahali.", a:"animate-float"},
-            {n:"Chocolate Day", i:"🍫", t:"You are the sweetness that makes my life rich.", a:"animate-wobble"},
-            {n:"Teddy Day", i:"🧸", t:"Soft, warm, and mine—just like our love.", a:"animate-sway"},
-            {n:"Promise Day", i:"🤝", t:"I promise to be your strength and your smile.", a:"animate-float"},
-            {n:"Hug Day", i:"🫂", t:"In your arms, the whole world disappears.", a:"animate-heartbeat"},
-            {n:"Kiss Day", i:"💋", t:"A kiss to seal our destiny together.", a:"animate-wobble"},
-            {n:"Valentine Day", i:"💝", t:"Happy Valentine's Day to my Vahali!", a:"animate-heartbeat"}
-        ];
-
         const mems = [
             {t:"First Meet", d:"The day I found my soulmate, Vahali.", s:"Images/meet.jpg"},
             {t:"First Hug", d:"Finding my home in your warmth.", s:"Images/hug.jpg"},
-            {t:"First Kiss", d:"Pure magic in the test of your lips, Vahali.", s:"Images/kiss.jpg"},
+            {t:"First Kiss", d:"Pure magic in the test of your lips.", s:"Images/kiss.jpg"},
             {t:"First Drive", d:"Long roads and our favorite songs.", s:"Images/drive.jpg"},
-            {t:"First Rose", d:"The first petal of our story, Vahali.", s:"Images/rose.jpg"},
+            {t:"First Rose", d:"The first petal of our story.", s:"Images/rose.jpg"},
             {t:"The Proposal", d:"The best 'Yes' of my entire life.", s:"Images/propose.jpg"},
             {t:"Dinner Date", d:"One Plate One Love.", s:"Images/dinner.jpg"},
             {t:"Movie Date", d:"Sharing popcorn and endless whispers.", s:"Images/movie.jpg"},
@@ -207,78 +197,143 @@
             {t:"Camping Date", d:"Under the stars with my Vahali.", s:"Images/camping.jpg"}
         ];
 
+       const journeyData = [
+            {d:1, s:"It was a very meaningful meeting, especially it happens We engaged in a thorough Q&A session from both sides, ensuring everything was on the table. Most importantly, we took a major life-changing decision together. While there is a natural bit of worry given the scale of the choice, there is a strong sense of positivity and faith in our path forward. Following our follow-up conversation over the phone, I feel much more reassured that the future will be smooth. We have truly started to understand each other."},
+            {d:2, s:"Quick chat turned into a marathon call, filled with the usual playful gags and lighthearted scolding that kept the energy high. Amidst the laughter, you successfully expanded your travel bucket list with exciting new goals and even I earned the prestigious 'Daya' Award. It was a day that perfectly captured your bond—balancing future travel dreams."},
+            {d:3, s:"Again special day filled with happy memories. You started by sharing childhood photos and having some good conversations, then talked about your shopping trips and shared colorful photos from Holi. A big highlight of the day was officially receiving the 'Daya award'. Most memorable part was getting that childhood princess photo."},
+            {d:4, s:"Pleasant day focused on steady connection. It started with your usual conversations and moved into sharing more photographs and childhood memories. You kept in touch with 'on and off' chats throughout the day. Thanks for cute cute photographs."},
+            {d:5, s:"A day of spiritual beginnings and surprising coincidences. Temple visits followed by a fated moment where you accidentally met at the same restaurant, where I also met your parents. Nightly conversation shifted to video calls, deepening our bonds. Thanks for helping like my Advisor!"},
+            {d:6, s:"The conversation moved into more personal territory centered around a 'future fantasy' list. This led to a more intimate atmosphere and playful 'dirty talk' that added a new layer of chemistry. Bold new level of openness brought us closer. Still waiting for updated list!🫣"},
+            {d:7, s:"A beautiful mix of spirituality and romantic humor. Shiva's darshan followed by a 'medical prescription' from Dr. Pooja Patel. The patient requires a daily dosage of kisses and hugs! Prepare additional doses list!!!"},
+            {d:8, s:"A turning point. First long-drive date surprise! We shared a 'Kit Kat break' and reached a beautiful milestone: holding your hand for the first time. I made a heartfelt promise to keep this bond tied until my last breath."},
+            {d:9, s:"A shift from routine to romance. Added hug and kiss emojis to daily chats and I became a dedicated poet for my 'beautiful princess.' Day defined by creative affection and a move toward an intimate, 'fluttery' bond."},
+            {d:10, s:"Balance between busy work and giving my princess attention. I eagerly listened to her reels talk. I changed the mood by singing classic 90s songs to her, adding a soulful and romantic touch to our conversation."},
+            {d:11, s:"A memorable milestone. Shared romantic reels led to deep conversations about future cuddles and affection. We both moved to flirting and started dreaming about our life together."},
+            {d:12, s:"A whirlwind of affection. Overflowing with hugs and kisses reels. While we spent time dreaming about what’s next, those future plans are still 'cooking' and steadily taking shape. Love-filled day!"},
+            {d:13, s:"Connection reached a whole new level. Playful flirting evolved into something 'pro' and effortless. Deep, unfiltered conversations pushed boundaries and solidified a rock-solid bond."},
+            {d:14, s:"The countdown begins. Anticipation is making things intense. My mission is to make every one of her fantasies a reality—I’m fully committed to checking off every item on her wishlist."},
+            {d:15, s:"Officially solidified our faith in one another. Genuine mutual trust has grown. We’ve cultivated a powerful 'made for each other' bond. I am exactly where I am meant to be with her, my Vahali."},
+            {d:16, s:"A pivotal moment of reflection. I urged her to see beyond the surface and recognize that I am her 'best fit.' A checkpoint to ensure we align on emotional investment before fully committing to the wish list. ❤️"},
+            {d:17, s:"Morning poetry and heartfelt quotes for my princess. Adorable photos from Uttarayan 2026 celebrations shared. A late-night call strengthened our emotional connection despite a busy travel day."},
+            {d:18, s:"Unforgettable chapter. Picked up Vahali from the station, visited Galteshwar Shiva Temple. I proposed with a handmade pop-up letter and sketchbook. Sweet moments over ice cream and kisses I will cherish forever."},
+            {d:19, s:"Blessings from Raja Ranchhod. Lingering taste of kisses followed by shopping and a movie. High-quality time at a cafe. A day defined by love, joy, and the simple pleasure of being together."},
+            {d:20, s:"Reflecting on our two days together. Deep emotional bond realized. My love for you is growing more every day through our long calls, poetic flirting, and double-meaning jokes. You are the one."},
+            {d:21, s:"Excitement for the future. 'Color-coding' our connection through cloth-matching. Shared mystery and secret planning made the day feel incredibly intimate. Simple plans feel better with you."},
+            {d:22, s:"'Judgment Day' where rituals brought our worlds together. Warm welcome from sister-in-law and 'Jamai Sa' decoration. Unforgettable food and our first hug/kiss in our room. A turning point of deep trust."},
+            {d:23, s:"Intimacy and playful energy. Best friends and passionate partners. I am fully dedicated to our future together because I already feel like I know you from the inside out."},
+            {d:24, s:"One memory melted my heart: seeing the genuine care in my Vahali's eyes when my health dipped. That protective, nurturing side made me fall for you all over again. I love you more than words can say."},
+            {d:25, s:"Morning of 'overloaded' kisses in matching white outfits. Proud to hear others praise you. Celebrated Mom's birthday virtually—giving you cake made it feel like you were right there with us."},
+            {d:26, s:"Another match day! I surprised her and she realized I am her 'heater'—the one who brings her warmth and comfort. We reached a stage where connection feels deep, settled, and genuine."},
+            {d:27, s:"Busy shopping trip. I made up for limited day-time attention by staying on a call all night, watching her sleep. She has started predicting my thoughts—a level of connection that makes me feel truly seen."},
+            {d:28, s:"A challenging day due to a broken 'golden rule.' Building perfect understanding takes time. Hurdles pushed us to focus on our emotional bond. Ended on a positive note, moving forward stronger."},
+            {d:29, s:"Talking to Vahali has become my 'daily tonic.' We are finally aligning on the same point of view—a major milestone. A great day showing how much we are becoming one."},
+            {d:30, s:"'Addictive' messages and morning video call therapy. Caught up on pending summaries. We couldn't resist the fun of reel-sharing! Officially started the countdown for our one-month anniversary."},
+            {d:31, s:"Full preparation mode for the anniversary. Heart completely focused on the countdown. counting down every moment until I can finally be with her again."},
+            {d:32, s:"Incredible journey of memories. Handmade string art frame gifted. Camping trip with deep cuddles and passionate moments. She slept in my lap on the way back. A day of perfect connection."},
+            {d:33, s:"A difficult start, but heart-to-heart talk brought us back. I reminded myself that our connection is all that matters. Grateful for how she helps me find my way back to a positive place. I love you, Vahalu."},
+            {d:34, s:"Busy day, but nightly conversation made it better. We remain incredibly positive and committed to fighting through the long-distance phase together. Making memories that sustain us. Right, my Vahalu?"},
+            {d:35, s:"'Kiss therapy' from my doctor. Romantic songs played for her and caught up on long-overdue summaries. Revisited the spot where we first met. Flirting until she drifted off to sleep. Love story growing."},
+            {d:36, s:"Vahali shared a status story of our entire January journey. It made me so happy! Used romantic song lyrics to communicate my feelings. Putting in extra effort to impress her is always worth it."},
+            {d:37, s:"Busy day of travel, missing her constantly. Any enjoyment feels incomplete without my better half. Long call home made up for it, topped off with a surprise from her that turned my whole mood around."},
+            {d:38, s:"Small misunderstanding quickly bridged. Preoccupied making Valentine's details perfect. Showed her the progress on handmade flowers. Building our future with the person who makes it worth it. ❤️"},
+            {d:39, s:"A reminder of how deeply Vahali cares for me—checking regularly on my eye drops. Her support is the heartbeat of this relationship. Smooth and successful day in our love story."},
+            {d:40, s:"Rose Day! Rocky start with a misunderstanding, but deep discussion made us stronger. Romantic 'flower rain' surprise and heart-shaped teddy. Happy Rose Day, my Vahali!"},
+            {d:41, s:"Distance felt heavy today as we traveled further apart. Loneliness was noticeable, but constant discussion keeps us close at heart. Proof that our bond can withstand any distance."}
+        ];
+
+        // Gallery Logic (Smooth Swap)
+        function initGallery() {
+            const mGrid = document.getElementById('m-btns');
+            mGrid.innerHTML = "";
+            mems.forEach((m, i) => {
+                const b = document.createElement('button');
+                b.className = `mem-btn ${i===0?'active':''}`;
+                b.innerText = m.t;
+                b.onclick = () => {
+                    document.querySelectorAll('.mem-btn').forEach(x => x.classList.remove('active'));
+                    b.classList.add('active');
+                    const img = document.getElementById('m-img');
+                    img.classList.add('img-fade'); // Start fade out
+                    setTimeout(() => {
+                        img.src = m.s;
+                        document.getElementById('m-title').innerText = m.t;
+                        document.getElementById('m-desc').innerText = m.d;
+                        img.classList.remove('img-fade'); // Fade back in
+                    }, 400);
+                };
+                mGrid.appendChild(b);
+            });
+            document.getElementById('m-desc').innerText = mems[0].d;
+        }
+
+        // Valentine Week Logic (With Animation)
+        const vWeek = [
+            {n:"Rose Day", i:"🌹", t:"Vahali, you are the blossom that never fades."},
+            {n:"Propose Day", i:"💍", t:"Every heartbeat says I want you forever."},
+            {n:"Chocolate Day", i:"🍫", t:"The sweetness of my life is you."},
+            {n:"Teddy Day", i:"🧸", t:"Soft and warm, just like our bond."},
+            {n:"Promise Day", i:"🤝", t:"I promise to hold your hand forever."},
+            {n:"Hug Day", i:"🫂", t:"Your hug is my safest place."},
+            {n:"Kiss Day", i:"💋", t:"Sealing our love with a kiss."},
+            {n:"Valentine Day", i:"💝", t:"Happy Valentine's, my Vahali!"}
+        ];
+        let vIdx = 0;
+        function nextDay() {
+            vIdx = (vIdx + 1) % vWeek.length;
+            const icon = document.getElementById('d-icon');
+            icon.classList.remove('animate-magic');
+            void icon.offsetWidth; // Force reflow
+            icon.innerText = vWeek[vIdx].i;
+            icon.classList.add('animate-magic');
+            document.getElementById('d-name').innerText = vWeek[vIdx].n;
+            document.getElementById('d-text').innerText = vWeek[vIdx].t;
+        }
+
+        // Journey Setup
+        const jGrid = document.getElementById('j-grid');
+        journeyData.forEach((item) => {
+            const btn = document.createElement('div');
+            btn.className = `day-tab ${item.d === 41 ? 'active' : ''}`;
+            btn.innerHTML = `<span class="d-lbl">Day</span><span class="d-num">${item.d}</span>`;
+            btn.onclick = () => {
+                document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('j-title').innerText = `Day ${item.d} Summary`;
+                document.getElementById('j-desc').innerText = item.s;
+            };
+            jGrid.appendChild(btn);
+        });
+        document.getElementById('j-desc').innerText = journeyData[40].s;
+
+        // General Functions
         function checkPass() {
             if(document.getElementById('passInput').value === "vahalu") {
                 document.getElementById('lock-screen').classList.add('hidden');
-                document.getElementById('memory-content').classList.remove('blurred');
-            } else {
-                document.getElementById('error-msg').style.display = 'block';
-                setTimeout(()=> document.getElementById('error-msg').style.display = 'none', 2000);
-            }
+                document.getElementById('gallery-content').classList.remove('hidden');
+                initGallery();
+            } else { alert("Try again, Vahali!"); }
         }
-
-        const grid = document.getElementById('m-btns');
-        mems.forEach((m, i) => {
-            const b = document.createElement('button');
-            b.className = `m-btn ${i===0?'active':''}`;
-            b.innerText = m.t;
-            b.onclick = () => {
-                document.querySelectorAll('.m-btn').forEach(x => x.classList.remove('active'));
-                b.classList.add('active');
-                document.getElementById('m-title').innerText = m.t;
-                document.getElementById('m-desc').innerText = m.d;
-                document.getElementById('m-img').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('m-img').src = m.s;
-                    document.getElementById('m-img').style.opacity = '1';
-                }, 200);
-            };
-            grid.appendChild(b);
-        });
-
         function jump(i) { document.querySelectorAll('.slide')[i].scrollIntoView({behavior:'smooth'}); }
-        
-        let dIdx = 0;
-        function nextDay() {
-            dIdx++; if(dIdx >= days.length) { jump(2); return; }
-            const icon = document.getElementById('d-icon');
-            icon.className = ''; void icon.offsetWidth; 
-            icon.innerText = days[dIdx].i;
-            icon.classList.add(days[dIdx].a);
-            document.getElementById('d-name').innerText = days[dIdx].n;
-            document.getElementById('d-text').innerText = days[dIdx].t;
+        function dodge() { 
+            const b = document.getElementById('no-btn'); 
+            b.style.left = Math.random()*150+'px'; 
+            b.style.top = Math.random()*100+'px'; 
         }
 
-        function dodge() {
-            const btn = document.getElementById('no-btn');
-            btn.style.position = 'fixed';
-            btn.style.left = Math.random()*(window.innerWidth-100)+'px';
-            btn.style.top = Math.random()*(window.innerHeight-50)+'px';
-        }
-
+        // Background Hearts
         const canvas = document.getElementById('bg-stage');
         const ctx = canvas.getContext('2d');
-        let hearts = [];
+        let h_arr = [];
         function resize() { canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
         window.onresize = resize; resize();
-        class H {
-            constructor() { this.reset(); }
-            reset() { this.x=Math.random()*canvas.width; this.y=canvas.height+20; this.s=Math.random()*15+10; this.sp=Math.random()*1+0.5; this.a=Math.random()*0.3; }
-            u() { this.y-=this.sp; if(this.y < -20) this.reset(); }
-            d() { ctx.fillStyle=`rgba(255,0,0,${this.a})`; ctx.font=`${this.s}px serif`; ctx.fillText('❤', this.x, this.y); }
-        }
-        for(let i=0; i<20; i++) hearts.push(new H());
-        function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); hearts.forEach(h=>{h.u(); h.d();}); requestAnimationFrame(anim); }
+        class H { constructor() { this.reset(); } reset() { this.x=Math.random()*canvas.width; this.y=canvas.height+20; this.s=Math.random()*15+10; this.sp=Math.random()*1+0.5; this.a=Math.random()*0.3; } u() { this.y-=this.sp; if(this.y < -20) this.reset(); } d() { ctx.fillStyle=`rgba(255, 77, 109, ${this.a})`; ctx.font=`${this.s}px serif`; ctx.fillText('❤', this.x, this.y); } }
+        for(let i=0; i<15; i++) h_arr.push(new H());
+        function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); h_arr.forEach(h=>{h.u(); h.d();}); requestAnimationFrame(anim); }
         anim();
 
         window.onscroll = () => {
             const dots = document.querySelectorAll('.heart-dot');
-            document.querySelectorAll('.slide').forEach((s, i) => {
-                if(window.scrollY >= s.offsetTop - 300) {
-                    dots.forEach(d => d.classList.remove('active'));
-                    dots[i].classList.add('active');
-                }
-            });
+            document.querySelectorAll('.slide').forEach((s, i) => { if(window.scrollY >= s.offsetTop - 300) { dots.forEach(d => d.classList.remove('active')); dots[i].classList.add('active'); } });
         };
     </script>
 </body>
