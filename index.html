@@ -40,52 +40,59 @@
         .heart-dot.active { opacity: 1; transform: scale(1.6); filter: drop-shadow(0 0 5px red); }
 
         .slide {
-            position: relative; height: 100vh; width: 100vw;
+            position: relative; min-height: 100vh; width: 100vw;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 5; text-align: center; padding: 20px;
+            z-index: 5; text-align: center; padding: 40px 20px;
         }
 
         /* 3D HEART */
-        .scene-3d { width: 180px; height: 180px; perspective: 1000px; margin: 20px 0; cursor: pointer; }
+        .scene-3d { width: 150px; height: 150px; perspective: 1000px; margin: 20px 0; cursor: pointer; }
         .heart-3d {
-            position: relative; width: 100px; height: 100px; transform-style: preserve-3d;
+            position: relative; width: 80px; height: 80px; transform-style: preserve-3d;
             animation: rotate3D 5s infinite linear; margin: 0 auto;
         }
-        .heart-layer { position: absolute; width: 100px; height: 100px; background: var(--true-red); transform: rotate(-45deg); }
-        .heart-layer::before, .heart-layer::after { content: ''; width: 100px; height: 100px; background: var(--true-red); border-radius: 50%; position: absolute; }
-        .heart-layer::before { top: -50px; left: 0; }
-        .heart-layer::after { left: 50px; top: 0; }
+        .heart-layer { position: absolute; width: 80px; height: 80px; background: var(--true-red); transform: rotate(-45deg); }
+        .heart-layer::before, .heart-layer::after { content: ''; width: 80px; height: 80px; background: var(--true-red); border-radius: 50%; position: absolute; }
+        .heart-layer::before { top: -40px; left: 0; }
+        .heart-layer::after { left: 40px; top: 0; }
         @keyframes rotate3D { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
 
-        /* GLASS CARD & CONTENT */
+        /* GLASS CARD */
         .glass-card {
-            background: rgba(255, 255, 255, 0.9); padding: 30px 20px; border-radius: 35px;
-            width: 100%; max-width: 400px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
-            transition: 0.5s;
+            background: rgba(255, 255, 255, 0.92); padding: 35px 20px; border-radius: 40px;
+            width: 100%; max-width: 450px; box-shadow: 0 20px 40px rgba(255, 77, 109, 0.15);
+            transition: 0.5s; position: relative;
         }
 
         /* ICON ANIMATIONS */
-        #d-icon {
-            font-size: 6rem; margin: 15px; display: inline-block;
-            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
-        }
-
-        /* Specific Icon Classes */
+        #d-icon { font-size: 5.5rem; margin: 15px; display: inline-block; }
         .animate-sway { animation: sway 3s infinite ease-in-out; }
-        .animate-spin-slow { animation: spin 4s infinite linear; }
         .animate-wobble { animation: wobble 1s infinite; }
         .animate-heartbeat { animation: heartbeat 1.2s infinite ease-in-out; }
         .animate-float { animation: floatIcon 3s infinite ease-in-out; }
 
         @keyframes sway { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
-        @keyframes wobble { 0%, 100% { transform: translateX(0); } 25% { transform: rotate(5deg); } 75% { transform: rotate(-5deg); } }
-        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 20% { transform: scale(1.25); } 40% { transform: scale(1.1); } 60% { transform: scale(1.3); } }
+        @keyframes wobble { 0%, 100% { transform: rotate(5deg); } 50% { transform: rotate(-5deg); } }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
         @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* MEMORY IMAGE AREA (LARGER) */
+        .image-container {
+            width: 100%;
+            height: 280px; /* Increased height */
+            border-radius: 25px;
+            overflow: hidden;
+            margin: 15px 0;
+            background: #fff;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border: 8px solid white; /* Polaroid style */
+        }
+        #m-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s ease; }
 
         /* PASSWORD OVERLAY */
         #lock-screen {
             position: absolute; inset: 0; background: rgba(255, 240, 243, 0.98);
-            z-index: 100; border-radius: 35px; display: flex; flex-direction: column;
+            z-index: 100; border-radius: 40px; display: flex; flex-direction: column;
             align-items: center; justify-content: center; padding: 20px;
         }
         .pass-input {
@@ -94,17 +101,17 @@
         }
 
         .hidden { display: none !important; }
-        .blurred { filter: blur(10px); pointer-events: none; }
+        .blurred { filter: blur(12px); pointer-events: none; }
 
         /* MEMORY GRID */
-        .m-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 15px; }
+        .m-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
         .m-btn {
-            background: white; border: 1.5px solid var(--rose); padding: 10px 2px;
-            border-radius: 12px; color: var(--rose); font-weight: 800; font-size: 10px; cursor: pointer;
+            background: white; border: 1.5px solid var(--rose); padding: 12px 5px;
+            border-radius: 15px; color: var(--rose); font-weight: 800; font-size: 11px; cursor: pointer;
         }
-        .m-btn.active { background: var(--rose); color: white; }
+        .m-btn.active { background: var(--rose); color: white; transform: scale(1.05); }
 
-        .scroll-hint { position: absolute; bottom: 20px; animation: float 2s infinite; cursor: pointer; color: var(--rose); font-weight: 900; font-size: 0.7rem; letter-spacing: 2px; }
+        .scroll-hint { position: absolute; bottom: 20px; animation: float 2s infinite; cursor: pointer; color: var(--rose); font-weight: 900; font-size: 0.7rem; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
     </style>
 </head>
@@ -129,7 +136,7 @@
         </div>
         <h1 style="font-family:'Dancing Script'; font-size: 5rem; color: var(--rose);">Vahali</h1>
         <p style="letter-spacing: 5px;">AKHIL & POOJA</p>
-        <div class="scroll-hint" onclick="jump(1)">SCROLL DOWN FOR MORE LOVE <br> <span style="font-size: 1.5rem;">♥</span></div>
+        <div class="scroll-hint" onclick="jump(1)">SCROLL DOWN FOR LOVE <br> <span style="font-size: 1.5rem;">♥</span></div>
     </section>
 
     <section id="week" class="slide">
@@ -138,7 +145,7 @@
             <div id="d-icon" class="animate-sway">🌹</div>
             <h3 id="d-name" style="font-size: 1.8rem;">Rose Day</h3>
             <p id="d-text" style="margin: 10px 0; font-weight: 300;">Vahali, you are the blossom that never fades in my heart.</p>
-            <button onclick="nextDay()" style="background: var(--rose); color: white; border: none; padding: 15px 35px; border-radius: 50px; font-weight: 900; margin-top: 15px; cursor: pointer;">Next Magic Day ➜</button>
+            <button onclick="nextDay()" style="background: var(--rose); color: white; border: none; padding: 15px 35px; border-radius: 50px; font-weight: 900; cursor: pointer;">Next Day ➜</button>
         </div>
     </section>
 
@@ -154,22 +161,22 @@
     </section>
 
     <section id="memories" class="slide">
-        <div class="glass-card" style="position: relative; overflow: hidden; min-height: 480px;">
+        <div class="glass-card" style="overflow: hidden; min-height: 600px;">
             <div id="lock-screen">
                 <span style="font-size: 3rem;">🔒</span>
-                <h3 style="margin-top: 10px;">A Private Space</h3>
+                <h3 style="margin-top: 10px;">Our Private Gallery</h3>
                 <input type="password" id="passInput" class="pass-input" placeholder="Password...">
-                <button onclick="checkPass()" style="background: var(--rose); color: white; border: none; padding: 10px 30px; border-radius: 20px; font-weight: 800;">Unlock Love</button>
-                <p id="error-msg" style="color: red; font-size: 0.6rem; margin-top: 10px; display: none;">Wrong password, try again! 💔</p>
+                <button onclick="checkPass()" style="background: var(--rose); color: white; border: none; padding: 10px 30px; border-radius: 20px; font-weight: 800;">Unlock Memories</button>
+                <p id="error-msg" style="color: red; font-size: 0.6rem; margin-top: 10px; display: none;">Try again, Vahali! 💔</p>
             </div>
 
             <div id="memory-content" class="blurred">
-                <h2 style="font-family:'Dancing Script'; color: var(--rose); font-size: 2rem;">Vahali</h2>
-                <div style="width:100%; height:180px; border-radius:20px; overflow:hidden; margin: 10px 0; border: 2px solid var(--light-pink);">
-                    <img id="m-img" src="Images/meet.jpg" style="width:100%; height:100%; object-fit:cover;">
+                <h2 style="font-family:'Dancing Script'; color: var(--rose); font-size: 2.2rem;">Vahali</h2>
+                <div class="image-container">
+                    <img id="m-img" src="Images/meet.jpg">
                 </div>
-                <h3 id="m-title" style="font-size: 1.3rem;">First Meet</h3>
-                <p id="m-desc" style="font-size: 0.8rem; height: 40px; margin-bottom: 10px;">The day I found my soulmate, Vahali.</p>
+                <h3 id="m-title" style="font-size: 1.5rem; margin-top: 5px;">First Meet</h3>
+                <p id="m-desc" style="font-size: 0.85rem; height: 45px; margin-bottom: 10px;">The day I found my soulmate, Vahali.</p>
                 <div class="m-grid" id="m-btns"></div>
             </div>
         </div>
@@ -177,14 +184,14 @@
 
     <script>
         const days = [
-            {n:"Rose Day", i:"🌹", t:"Vahali, you are the blossom that never fades in my heart.", a:"animate-sway"},
+            {n:"Rose Day", i:"🌹", t:"Vahali, you are the blossom that never fades.", a:"animate-sway"},
             {n:"Propose Day", i:"💍", t:"Every heartbeat says I want you forever, Vahali.", a:"animate-float"},
             {n:"Chocolate Day", i:"🍫", t:"You are the sweetness that makes my life rich.", a:"animate-wobble"},
-            {n:"Teddy Day", i:"🧸", t:"Soft, warm, and mine—just like our love, Vahali.", a:"animate-sway"},
-            {n:"Promise Day", i:"🤝", t:"I promise to be your strength and your smile, always.", a:"animate-float"},
-            {n:"Hug Day", i:"🫂", t:"In your arms, Vahali, the whole world disappears.", a:"animate-heartbeat"},
-            {n:"Kiss Day", i:"💋", t:"A kiss to seal our destiny together, Vahali.", a:"animate-wobble"},
-            {n:"Valentine Day", i:"💝", t:"Happy Valentine's Day to my world, my Vahali!", a:"animate-heartbeat"}
+            {n:"Teddy Day", i:"🧸", t:"Soft, warm, and mine—just like our love.", a:"animate-sway"},
+            {n:"Promise Day", i:"🤝", t:"I promise to be your strength and your smile.", a:"animate-float"},
+            {n:"Hug Day", i:"🫂", t:"In your arms, the whole world disappears.", a:"animate-heartbeat"},
+            {n:"Kiss Day", i:"💋", t:"A kiss to seal our destiny together.", a:"animate-wobble"},
+            {n:"Valentine Day", i:"💝", t:"Happy Valentine's Day to my Vahali!", a:"animate-heartbeat"}
         ];
 
         const mems = [
@@ -220,7 +227,11 @@
                 b.classList.add('active');
                 document.getElementById('m-title').innerText = m.t;
                 document.getElementById('m-desc').innerText = m.d;
-                document.getElementById('m-img').src = m.s;
+                document.getElementById('m-img').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('m-img').src = m.s;
+                    document.getElementById('m-img').style.opacity = '1';
+                }, 200);
             };
             grid.appendChild(b);
         });
@@ -231,8 +242,7 @@
         function nextDay() {
             dIdx++; if(dIdx >= days.length) { jump(2); return; }
             const icon = document.getElementById('d-icon');
-            icon.className = ''; // Reset animation
-            void icon.offsetWidth; // Trigger reflow
+            icon.className = ''; void icon.offsetWidth; 
             icon.innerText = days[dIdx].i;
             icon.classList.add(days[dIdx].a);
             document.getElementById('d-name').innerText = days[dIdx].n;
