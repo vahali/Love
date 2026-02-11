@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Akhil & Pooja (Vahali)</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;600;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --rose: #ff4d6d;
+            --true-red: #ff0000;
+            --deep-wine: #590d22;
+            --light-pink: #fff0f3;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background: var(--light-pink);
+            color: var(--deep-wine);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        #bg-stage { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+
+        /* NAVIGATION DOTS */
+        .nav-dots {
+            position: fixed; left: 15px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 20px; z-index: 1000;
+        }
+        .heart-dot {
+            width: 18px; height: 18px; background: var(--true-red);
+            clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
+            opacity: 0.15; transition: 0.4s; cursor: pointer;
+        }
+        .heart-dot.active { opacity: 1; transform: scale(1.6); filter: drop-shadow(0 0 5px red); }
+
+        .slide {
+            position: relative; height: 100vh; width: 100vw;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 5; text-align: center; padding: 20px;
+        }
+
+        /* 3D HEART */
+        .scene-3d { width: 180px; height: 180px; perspective: 1000px; margin: 20px 0; cursor: pointer; }
+        .heart-3d {
+            position: relative; width: 100px; height: 100px; transform-style: preserve-3d;
+            animation: rotate3D 5s infinite linear; margin: 0 auto;
+        }
+        .heart-layer { position: absolute; width: 100px; height: 100px; background: var(--true-red); transform: rotate(-45deg); }
+        .heart-layer::before, .heart-layer::after { content: ''; width: 100px; height: 100px; background: var(--true-red); border-radius: 50%; position: absolute; }
+        .heart-layer::before { top: -50px; left: 0; }
+        .heart-layer::after { left: 50px; top: 0; }
+        @keyframes rotate3D { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+
+        /* GLASS CARD & CONTENT */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9); padding: 30px 20px; border-radius: 35px;
+            width: 100%; max-width: 400px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+            transition: 0.5s;
+        }
+
+        /* ICON ANIMATIONS */
+        #d-icon {
+            font-size: 6rem; margin: 15px; display: inline-block;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
+        }
+
+        /* Specific Icon Classes */
+        .animate-sway { animation: sway 3s infinite ease-in-out; }
+        .animate-spin-slow { animation: spin 4s infinite linear; }
+        .animate-wobble { animation: wobble 1s infinite; }
+        .animate-heartbeat { animation: heartbeat 1.2s infinite ease-in-out; }
+        .animate-float { animation: floatIcon 3s infinite ease-in-out; }
+
+        @keyframes sway { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+        @keyframes wobble { 0%, 100% { transform: translateX(0); } 25% { transform: rotate(5deg); } 75% { transform: rotate(-5deg); } }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 20% { transform: scale(1.25); } 40% { transform: scale(1.1); } 60% { transform: scale(1.3); } }
+        @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* PASSWORD OVERLAY */
+        #lock-screen {
+            position: absolute; inset: 0; background: rgba(255, 240, 243, 0.98);
+            z-index: 100; border-radius: 35px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .pass-input {
+            border: 2px solid var(--rose); padding: 12px; border-radius: 25px;
+            width: 80%; text-align: center; margin: 15px 0; outline: none; font-weight: 600;
+        }
+
+        .hidden { display: none !important; }
+        .blurred { filter: blur(10px); pointer-events: none; }
+
+        /* MEMORY GRID */
+        .m-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 15px; }
+        .m-btn {
+            background: white; border: 1.5px solid var(--rose); padding: 10px 2px;
+            border-radius: 12px; color: var(--rose); font-weight: 800; font-size: 10px; cursor: pointer;
+        }
+        .m-btn.active { background: var(--rose); color: white; }
+
+        .scroll-hint { position: absolute; bottom: 20px; animation: float 2s infinite; cursor: pointer; color: var(--rose); font-weight: 900; font-size: 0.7rem; letter-spacing: 2px; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-stage"></canvas>
+
+    <div class="nav-dots">
+        <div class="heart-dot active" onclick="jump(0)"></div>
+        <div class="heart-dot" onclick="jump(1)"></div>
+        <div class="heart-dot" onclick="jump(2)"></div>
+        <div class="heart-dot" onclick="jump(3)"></div>
+    </div>
+
+    <section id="home" class="slide">
+        <div class="scene-3d" onclick="jump(1)">
+            <div class="heart-3d">
+                <div class="heart-layer" style="transform: rotate(-45deg) translateZ(0px)"></div>
+                <div class="heart-layer" style="transform: rotate(-45deg) translateZ(8px); opacity:0.8;"></div>
+                <div class="heart-layer" style="transform: rotate(-45deg) translateZ(-8px); opacity:0.8;"></div>
+            </div>
+        </div>
+        <h1 style="font-family:'Dancing Script'; font-size: 5rem; color: var(--rose);">Vahali</h1>
+        <p style="letter-spacing: 5px;">AKHIL & POOJA</p>
+        <div class="scroll-hint" onclick="jump(1)">SCROLL DOWN FOR MORE LOVE <br> <span style="font-size: 1.5rem;">♥</span></div>
+    </section>
+
+    <section id="week" class="slide">
+        <div class="glass-card">
+            <h2 style="font-family:'Dancing Script'; color: var(--rose); font-size: 2.5rem;">Vahali</h2>
+            <div id="d-icon" class="animate-sway">🌹</div>
+            <h3 id="d-name" style="font-size: 1.8rem;">Rose Day</h3>
+            <p id="d-text" style="margin: 10px 0; font-weight: 300;">Vahali, you are the blossom that never fades in my heart.</p>
+            <button onclick="nextDay()" style="background: var(--rose); color: white; border: none; padding: 15px 35px; border-radius: 50px; font-weight: 900; margin-top: 15px; cursor: pointer;">Next Magic Day ➜</button>
+        </div>
+    </section>
+
+    <section id="ask" class="slide">
+        <div class="glass-card">
+            <h2 style="font-family:'Dancing Script'; color: var(--rose); font-size: 2.5rem;">Vahali</h2>
+            <h1 style="font-size: 1.8rem; margin: 20px 0;">Will you be my Valentine?</h1>
+            <div style="position:relative; height:100px; margin-top:20px;">
+                <button onclick="jump(3)" style="position:absolute; left:10px; background: var(--rose); color: white; border: none; padding: 15px 35px; border-radius: 50px; font-weight: 900;">YES!</button>
+                <button id="no-btn" onmouseover="dodge()" style="position:absolute; right:10px; background: #ddd; color: #666; border: none; padding: 15px 35px; border-radius: 50px;">NO</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="memories" class="slide">
+        <div class="glass-card" style="position: relative; overflow: hidden; min-height: 480px;">
+            <div id="lock-screen">
+                <span style="font-size: 3rem;">🔒</span>
+                <h3 style="margin-top: 10px;">A Private Space</h3>
+                <input type="password" id="passInput" class="pass-input" placeholder="Password...">
+                <button onclick="checkPass()" style="background: var(--rose); color: white; border: none; padding: 10px 30px; border-radius: 20px; font-weight: 800;">Unlock Love</button>
+                <p id="error-msg" style="color: red; font-size: 0.6rem; margin-top: 10px; display: none;">Wrong password, try again! 💔</p>
+            </div>
+
+            <div id="memory-content" class="blurred">
+                <h2 style="font-family:'Dancing Script'; color: var(--rose); font-size: 2rem;">Vahali</h2>
+                <div style="width:100%; height:180px; border-radius:20px; overflow:hidden; margin: 10px 0; border: 2px solid var(--light-pink);">
+                    <img id="m-img" src="/images/meet.jpg" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <h3 id="m-title" style="font-size: 1.3rem;">First Meet</h3>
+                <p id="m-desc" style="font-size: 0.8rem; height: 40px; margin-bottom: 10px;">The day I found my soulmate, Vahali.</p>
+                <div class="m-grid" id="m-btns"></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const days = [
+            {n:"Rose Day", i:"🌹", t:"Vahali, you are the blossom that never fades in my heart.", a:"animate-sway"},
+            {n:"Propose Day", i:"💍", t:"Every heartbeat says I want you forever, Vahali.", a:"animate-float"},
+            {n:"Chocolate Day", i:"🍫", t:"You are the sweetness that makes my life rich.", a:"animate-wobble"},
+            {n:"Teddy Day", i:"🧸", t:"Soft, warm, and mine—just like our love, Vahali.", a:"animate-sway"},
+            {n:"Promise Day", i:"🤝", t:"I promise to be your strength and your smile, always.", a:"animate-float"},
+            {n:"Hug Day", i:"🫂", t:"In your arms, Vahali, the whole world disappears.", a:"animate-heartbeat"},
+            {n:"Kiss Day", i:"💋", t:"A kiss to seal our destiny together, Vahali.", a:"animate-wobble"},
+            {n:"Valentine Day", i:"💝", t:"Happy Valentine's Day to my world, my Vahali!", a:"animate-heartbeat"}
+        ];
+
+        const mems = [
+            {t:"First Meet", d:"The day I found my soulmate, Vahali.", s:"/images/meet.jpg"},
+            {t:"First Hug", d:"Finding my home in your warmth.", s:"/images/hug.jpg"},
+            {t:"First Kiss", d:"Pure magic in the test of your lips, Vahali.", s:"/images/kiss.jpg"},
+            {t:"First Drive", d:"Long roads and our favorite songs.", s:"/images/drive.jpg"},
+            {t:"First Rose", d:"The first petal of our story, Vahali.", s:"/images/rose.jpg"},
+            {t:"The Proposal", d:"The best 'Yes' of my entire life.", s:"/images/propose.jpg"},
+            {t:"Dinner Date", d:"One Plate One Love.", s:"/images/dinner.jpg"},
+            {t:"Movie Date", d:"Sharing popcorn and endless whispers.", s:"/images/movie.jpg"},
+            {t:"Temple Visit", d:"Grateful for the blessing of YOU.", s:"/images/temple.jpg"},
+            {t:"Camping Date", d:"Under the stars with my Vahali.", s:"/images/camping.jpg"}
+        ];
+
+        function checkPass() {
+            if(document.getElementById('passInput').value === "vahalu") {
+                document.getElementById('lock-screen').classList.add('hidden');
+                document.getElementById('memory-content').classList.remove('blurred');
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+                setTimeout(()=> document.getElementById('error-msg').style.display = 'none', 2000);
+            }
+        }
+
+        const grid = document.getElementById('m-btns');
+        mems.forEach((m, i) => {
+            const b = document.createElement('button');
+            b.className = `m-btn ${i===0?'active':''}`;
+            b.innerText = m.t;
+            b.onclick = () => {
+                document.querySelectorAll('.m-btn').forEach(x => x.classList.remove('active'));
+                b.classList.add('active');
+                document.getElementById('m-title').innerText = m.t;
+                document.getElementById('m-desc').innerText = m.d;
+                document.getElementById('m-img').src = m.s;
+            };
+            grid.appendChild(b);
+        });
+
+        function jump(i) { document.querySelectorAll('.slide')[i].scrollIntoView({behavior:'smooth'}); }
+        
+        let dIdx = 0;
+        function nextDay() {
+            dIdx++; if(dIdx >= days.length) { jump(2); return; }
+            const icon = document.getElementById('d-icon');
+            icon.className = ''; // Reset animation
+            void icon.offsetWidth; // Trigger reflow
+            icon.innerText = days[dIdx].i;
+            icon.classList.add(days[dIdx].a);
+            document.getElementById('d-name').innerText = days[dIdx].n;
+            document.getElementById('d-text').innerText = days[dIdx].t;
+        }
+
+        function dodge() {
+            const btn = document.getElementById('no-btn');
+            btn.style.position = 'fixed';
+            btn.style.left = Math.random()*(window.innerWidth-100)+'px';
+            btn.style.top = Math.random()*(window.innerHeight-50)+'px';
+        }
+
+        const canvas = document.getElementById('bg-stage');
+        const ctx = canvas.getContext('2d');
+        let hearts = [];
+        function resize() { canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+        window.onresize = resize; resize();
+        class H {
+            constructor() { this.reset(); }
+            reset() { this.x=Math.random()*canvas.width; this.y=canvas.height+20; this.s=Math.random()*15+10; this.sp=Math.random()*1+0.5; this.a=Math.random()*0.3; }
+            u() { this.y-=this.sp; if(this.y < -20) this.reset(); }
+            d() { ctx.fillStyle=`rgba(255,0,0,${this.a})`; ctx.font=`${this.s}px serif`; ctx.fillText('❤', this.x, this.y); }
+        }
+        for(let i=0; i<20; i++) hearts.push(new H());
+        function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); hearts.forEach(h=>{h.u(); h.d();}); requestAnimationFrame(anim); }
+        anim();
+
+        window.onscroll = () => {
+            const dots = document.querySelectorAll('.heart-dot');
+            document.querySelectorAll('.slide').forEach((s, i) => {
+                if(window.scrollY >= s.offsetTop - 300) {
+                    dots.forEach(d => d.classList.remove('active'));
+                    dots[i].classList.add('active');
+                }
+            });
+        };
+    </script>
+</body>
+</html>
