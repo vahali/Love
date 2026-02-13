@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Akhil & Pooja | Vahali</title>
+    <title>Vahali | Akhil & Pooja</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;600;800&display=swap" rel="stylesheet">
     
@@ -15,7 +15,6 @@
             --glass: rgba(255, 255, 255, 0.96);
         }
 
-        /* Essential Fixes */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
             background: var(--light-pink); font-family: 'Montserrat', sans-serif;
@@ -23,131 +22,116 @@
         }
         ::-webkit-scrollbar { display: none; }
 
-        #bg-stage { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+        /* --- CUPID INTRO & MOSAIC HEART --- */
+        #intro-overlay {
+            position: fixed; inset: 0; background: var(--light-pink);
+            z-index: 5000; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; transition: 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-        /* Navigation */
+        .arrow {
+            position: absolute; left: -100px; top: 50%; font-size: 3rem;
+            transform: translateY(-50%); z-index: 5001; pointer-events: none;
+        }
+
+        .heart-mosaic {
+            position: relative; width: 340px; height: 340px;
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr); gap: 6px;
+            clip-path: path('M170 310 c-70 -70 -160 -140 -160 -210 a85 85 0 0 1 170 -30 a85 85 0 0 1 170 30 c0 90 -100 150 -170 210');
+            transition: 0.5s;
+        }
+
+        .mosaic-tile {
+            width: 100%; height: 100%; object-fit: cover;
+            border: 2px solid #fff; border-radius: 4px;
+            animation: floatTile 3s infinite alternate ease-in-out;
+            transition: 0.5s;
+        }
+
+        @keyframes floatTile {
+            from { transform: rotate(calc(var(--r) * 1deg)) translateY(0); }
+            to { transform: rotate(calc(var(--r2) * 1deg)) translateY(-8px); }
+        }
+
+        /* --- NAVIGATION --- */
         .nav-dots {
             position: fixed; right: 15px; top: 50%; transform: translateY(-50%);
-            display: flex; flex-direction: column; gap: 15px; z-index: 1000;
+            display: flex; flex-direction: column; gap: 12px; z-index: 1000;
         }
         .heart-dot {
             width: 14px; height: 14px; background: var(--rose);
             clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
             opacity: 0.2; transition: 0.4s; cursor: pointer;
         }
-        .heart-dot.active { opacity: 1; transform: scale(1.6); filter: drop-shadow(0 0 5px var(--rose)); }
+        .heart-dot.active { opacity: 1; transform: scale(1.8); filter: drop-shadow(0 0 5px var(--rose)); }
 
-        .slide {
-            position: relative; min-height: 100vh; width: 100vw;
-            display: flex; align-items: center; justify-content: center;
-            z-index: 5; padding: 20px;
-        }
-
-        .glass-card {
-            background: var(--glass); backdrop-filter: blur(12px);
-            padding: 25px 20px; border-radius: 30px;
-            width: 100%; max-width: 400px;
-            box-shadow: 0 20px 50px rgba(255, 77, 109, 0.15);
-            text-align: center; border: 1px solid rgba(255,255,255,0.9);
+        /* --- LAYOUT --- */
+        #bg-stage { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+        .slide { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; z-index: 5; padding: 20px; }
+        .glass-card { 
+            background: var(--glass); backdrop-filter: blur(15px); padding: 30px 20px; 
+            border-radius: 35px; width: 100%; max-width: 400px; text-align: center; 
+            border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 15px 35px rgba(255, 77, 109, 0.1);
         }
 
-        /* VALENTINE ANIMATION */
-        .icon-bounce { 
-            font-size: 5rem; margin: 15px; display: inline-block;
+        .journey-grid { 
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; 
+            max-height: 200px; overflow-y: auto; padding: 10px; 
+            background: rgba(255, 77, 109, 0.05); border-radius: 20px; 
         }
-        .animate-magic { animation: magicPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        @keyframes magicPop {
-            0% { transform: scale(0.3) rotate(-20deg); opacity: 0; }
-            50% { transform: scale(1.1) rotate(10deg); }
-            100% { transform: scale(1) rotate(0); opacity: 1; }
+        .day-tab { 
+            background: #fff; border: 1px solid var(--rose); padding: 8px 0;
+            border-radius: 10px; cursor: pointer; font-size: 0.7rem; font-weight: 800; color: var(--rose);
+        }
+        .day-tab.active { background: var(--rose); color: #fff; }
+
+        .img-frame { width: 100%; height: 240px; border-radius: 20px; overflow: hidden; border: 5px solid #fff; margin-bottom: 15px; background: #eee; }
+        #m-img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s opacity; }
+
+        .primary-btn { background: var(--rose); color: #fff; border: none; padding: 14px 35px; border-radius: 50px; font-weight: 800; cursor: pointer; margin-top: 15px; }
+        
+        @keyframes arrowFly {
+            0% { left: -100px; opacity: 1; }
+            50% { left: 50%; transform: translate(-50%, -50%) scale(1.5); }
+            100% { left: 150%; opacity: 0; }
         }
 
-        /* SMOOTH GALLERY TRANSITION */
-        .img-frame { 
-            width: 100%; height: 230px; border-radius: 20px; overflow: hidden; 
-            border: 5px solid #fff; box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
-            margin-bottom: 15px; position: relative; background: #fef2f4;
-        }
-        #m-img { 
-            width: 100%; height: 100%; object-fit: cover; 
-            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; 
-            opacity: 1;
-        }
-        .img-fade { opacity: 0 !important; transform: scale(0.95); }
-
-        /* JOURNEY GRID */
-        .journey-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-            max-height: 180px; overflow-y: auto; padding: 10px;
-            background: rgba(0,0,0,0.03); border-radius: 20px; margin-top: 15px;
-        }
-        .day-tab {
-            background: #fff; border: 1.5px solid var(--rose); padding: 8px 2px;
-            border-radius: 12px; cursor: pointer; transition: 0.3s;
-        }
-        .day-tab span { display: block; }
-        .d-lbl { font-size: 0.6rem; color: #999; text-transform: uppercase; }
-        .d-num { font-size: 0.85rem; font-weight: 800; color: var(--rose); }
-        .day-tab.active { background: var(--rose); transform: scale(1.05); border-color: var(--rose); }
-        .day-tab.active span { color: #fff; }
-
-        .display-area {
-            background: #fff; border-radius: 20px; padding: 15px; margin-bottom: 10px;
-            border-left: 5px solid var(--rose); text-align: left; min-height: 110px;
-        }
-
-        .mem-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        .mem-btn {
-            background: #fff; border: 1.5px solid var(--rose); padding: 10px;
-            border-radius: 12px; color: var(--rose); font-size: 0.7rem; font-weight: 800; cursor: pointer;
-        }
-        .mem-btn.active { background: var(--rose); color: #fff; }
-
-        .primary-btn {
-            background: var(--rose); color: #fff; border: none;
-            padding: 14px 35px; border-radius: 50px; font-weight: 800;
-            cursor: pointer; margin-top: 15px; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
-        }
-
-        .pass-input {
-            border: 2px solid var(--rose); padding: 15px; border-radius: 20px;
-            width: 80%; text-align: center; margin: 20px 0; outline: none;
-        }
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <canvas id="bg-stage"></canvas>
-
-    <div class="nav-dots">
-        <div class="heart-dot active" onclick="jump(0)"></div>
-        <div class="heart-dot" onclick="jump(1)"></div>
-        <div class="heart-dot" onclick="jump(2)"></div>
-        <div class="heart-dot" onclick="jump(3)"></div>
-        <div class="heart-dot" onclick="jump(4)"></div>
+    <div id="intro-overlay">
+        <div class="arrow" id="cupid-arrow">💘</div>
+        <div class="heart-mosaic" id="main-heart"></div>
+        <h2 id="intro-text" style="margin-top:40px; font-family:'Dancing Script'; color: var(--rose); font-size: 2.2rem; transition: 0.5s;">For My Vahali...</h2>
     </div>
 
-    <section class="slide">
+    <canvas id="bg-stage"></canvas>
+
+    <div class="nav-dots" id="dot-container"></div>
+
+    <section class="slide" id="s0">
         <div style="text-align: center;">
-            <h1 style="font-family:'Dancing Script'; font-size: 5rem; color: var(--rose);">Vahali</h1>
-            <p style="letter-spacing: 10px; font-weight: 300; margin-top: -10px;">AKHIL & POOJA</p>
+            <h1 style="font-family:'Dancing Script'; font-size: 5.5rem; color: var(--rose);">Vahali</h1>
+            <p style="letter-spacing: 12px; font-weight: 300; margin-top: -10px;">AKHIL & POOJA</p>
         </div>
     </section>
 
-    <section class="slide">
+    <section class="slide" id="s1">
         <div class="glass-card">
-            <h2 style="font-family:'Dancing Script'; color: var(--rose); font-size: 2.2rem;">Valentine Week</h2>
-            <div id="d-icon" class="icon-bounce">🌹</div>
-            <h3 id="d-name">Rose Day</h3>
-            <p id="d-text" style="font-size: 0.85rem; margin-top: 10px; color: #555; height: 40px;">Vahali, you are the blossom that never fades.</p>
+            <h2 style="font-family:'Dancing Script'; color: var(--rose); font-size: 2.5rem;">Valentine Week</h2>
+            <div id="d-icon" style="font-size: 5rem; margin: 20px; display: inline-block;">🌹</div>
+            <h3 id="d-name" style="font-size: 1.4rem;">Rose Day</h3>
+            <p id="d-text" style="font-size: 0.9rem; margin-top: 10px; color: #555; height: 45px;">Vahali, you are the blossom that never fades.</p>
             <button class="primary-btn" onclick="nextDay()">Next Magic Day ➜</button>
         </div>
     </section>
 
-    <section class="slide">
+    <section class="slide" id="s2">
         <div class="glass-card">
-            <h1 style="font-size: 1.6rem; margin-bottom: 20px;">Will you be my Valentine?</h1>
+            <h2 style="font-size: 1.8rem; margin-bottom: 30px;">Will you be my Valentine?</h2>
             <div style="position:relative; height:100px;">
                 <button class="primary-btn" onclick="jump(3)" style="position:absolute; left:20px;">YES!</button>
                 <button id="no-btn" onmouseover="dodge()" style="position:absolute; right:20px; padding: 14px 35px; border-radius: 50px; border: none; background: #eee;">No</button>
@@ -155,49 +139,46 @@
         </div>
     </section>
 
-    <section class="slide">
+    <section class="slide" id="s3">
         <div class="glass-card">
             <div id="lock-screen">
-                <span style="font-size: 3.5rem;">🔒</span>
-                <h3 style="margin-top: 10px;">Secret Gallery</h3>
-                <input type="password" id="passInput" class="pass-input" placeholder="Password">
+                <span style="font-size: 4rem;">🔒</span>
+                <h3 style="margin-top: 15px;">Secret Gallery</h3>
+                <input type="password" id="passInput" style="padding:15px; border-radius:20px; border:2px solid var(--rose); width:80%; text-align:center; margin: 20px 0;" placeholder="Secret Code">
                 <button class="primary-btn" onclick="checkPass()">Unlock</button>
             </div>
             <div id="gallery-content" class="hidden">
                 <div class="img-frame"><img id="m-img" src="Images/meet.jpg"></div>
-                <h3 id="m-title" style="color: var(--rose);">First Meet</h3>
-                <p id="m-desc" style="font-size: 0.8rem; margin: 8px 0; color: #666; height: 35px;"></p>
-                <div class="mem-grid" id="m-btns"></div>
+                <h3 id="m-title" style="color: var(--rose); font-size: 1.2rem;">First Meet</h3>
+                <p id="m-desc" style="font-size: 0.8rem; margin: 10px 0; color: #666;"></p>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;" id="m-btns"></div>
             </div>
         </div>
     </section>
 
-    <section class="slide">
+    <section class="slide" id="s4">
         <div class="glass-card">
             <h2 style="font-family:'Dancing Script'; color: var(--rose); font-size: 2.2rem;">Our Journey</h2>
-            <div class="display-area">
-                <h4 id="j-title" style="color: var(--rose); margin-bottom: 5px;">Day 41 Summary</h4>
+            <div style="text-align:left; background:#fff; padding:15px; border-radius:20px; border-left:5px solid var(--rose); margin-bottom:15px;">
+                <h4 id="j-title" style="color: var(--rose);">Day 41</h4>
                 <p id="j-desc" style="font-size: 0.8rem; line-height: 1.5; color: #444;"></p>
             </div>
             <div class="journey-grid" id="j-grid"></div>
         </div>
     </section>
 
-    <script>
-        const mems = [
-            {t:"First Meet", d:"The day I found my soulmate, Vahali.", s:"Images/meet.jpg"},
-            {t:"First Hug", d:"Finding my home in your warmth.", s:"Images/hug.jpg"},
-            {t:"First Kiss", d:"Pure magic in the test of your lips.", s:"Images/kiss.jpg"},
-            {t:"First Drive", d:"Long roads and our favorite songs.", s:"Images/drive.jpg"},
-            {t:"First Rose", d:"The first petal of our story.", s:"Images/rose.jpg"},
-            {t:"The Proposal", d:"The best 'Yes' of my entire life.", s:"Images/propose.jpg"},
-            {t:"Dinner Date", d:"One Plate One Love.", s:"Images/dinner.jpg"},
-            {t:"Movie Date", d:"Sharing popcorn and endless whispers.", s:"Images/movie.jpg"},
-            {t:"Temple Visit", d:"Grateful for the blessing of YOU.", s:"Images/temple.jpg"},
-            {t:"Camping Date", d:"Under the stars with my Vahali.", s:"Images/camping.jpg"}
-        ];
+    <section class="slide" id="s5">
+        <div class="glass-card">
+            <h2 style="font-family:'Dancing Script'; color: var(--rose); font-size: 2.5rem;">Forever</h2>
+            <div class="heart-mosaic" id="end-heart" style="margin: 20px auto;"></div>
+            <p style="font-weight: 800; letter-spacing: 5px; font-size: 0.8rem;">AKHIL ❤️ POOJA</p>
+        </div>
+    </section>
 
-       const journeyData = [
+    <script>
+        const imageList = ["Images/1.jpg", "Images/2.jpg", "Images/3.jpg", "Images/4jpg", "Images/5.jpg", "Images/6.jpg", "Images/7.jpg", "Images/8.jpg", "Images/9.jpg", "Images/10.jpg", "Images/11.jpg", "Images/12.jpg", "Images/13.jpg", "Images/14jpg", "Images/15.jpg", "Images/16.jpg", "Images/17.jpg", "Images/18.jpg", "Images/19.jpg", "Images/20.jpg"];
+        
+        const journeyData = [
             {d:1, s:"It was a very meaningful meeting, especially it happens We engaged in a thorough Q&A session from both sides, ensuring everything was on the table. Most importantly, we took a major life-changing decision together. While there is a natural bit of worry given the scale of the choice, there is a strong sense of positivity and faith in our path forward. Following our follow-up conversation over the phone, I feel much more reassured that the future will be smooth. We have truly started to understand each other."},
             {d:2, s:"Quick chat turned into a marathon call, filled with the usual playful gags and lighthearted scolding that kept the energy high. Amidst the laughter, you successfully expanded your travel bucket list with exciting new goals and even I earned the prestigious 'Daya' Award. It was a day that perfectly captured your bond—balancing future travel dreams."},
             {d:3, s:"Again special day filled with happy memories. You started by sharing childhood photos and having some good conversations, then talked about your shopping trips and shared colorful photos from Holi. A big highlight of the day was officially receiving the 'Daya award'. Most memorable part was getting that childhood princess photo."},
@@ -241,100 +222,126 @@
             {d:41, s:"Distance felt heavy today as we traveled further apart. Loneliness was noticeable, but constant discussion keeps us close at heart. Proof that our bond can withstand any distance."}
         ];
 
-        // Gallery Logic (Smooth Swap)
-        function initGallery() {
-            const mGrid = document.getElementById('m-btns');
-            mGrid.innerHTML = "";
-            mems.forEach((m, i) => {
-                const b = document.createElement('button');
-                b.className = `mem-btn ${i===0?'active':''}`;
-                b.innerText = m.t;
-                b.onclick = () => {
-                    document.querySelectorAll('.mem-btn').forEach(x => x.classList.remove('active'));
-                    b.classList.add('active');
-                    const img = document.getElementById('m-img');
-                    img.classList.add('img-fade'); // Start fade out
-                    setTimeout(() => {
-                        img.src = m.s;
-                        document.getElementById('m-title').innerText = m.t;
-                        document.getElementById('m-desc').innerText = m.d;
-                        img.classList.remove('img-fade'); // Fade back in
-                    }, 400);
-                };
-                mGrid.appendChild(b);
-            });
-            document.getElementById('m-desc').innerText = mems[0].d;
+        const mems = [{t:"First Meet", d:"The day I found my soulmate, Vahali.", s:"Images/meet.jpg"}, {t:"First Hug", d:"Finding my home in your warmth.", s:"Images/hug.jpg"}, {t:"First Kiss", d:"Pure magic in the test of your lips.", s:"Images/kiss.jpg"}, {t:"First Drive", d:"Long roads and our favorite songs.", s:"Images/drive.jpg"}, {t:"First Rose", d:"The first petal of our story.", s:"Images/rose.jpg"}, {t:"The Proposal", d:"The best 'Yes' of my entire life.", s:"Images/propose.jpg"}, {t:"Dinner Date", d:"One Plate One Love.", s:"Images/dinner.jpg"}, {t:"Movie Date", d:"Sharing popcorn and endless whispers.", s:"Images/movie.jpg"}, {t:"Temple Visit", d:"Grateful for the blessing of YOU.", s:"Images/temple.jpg"}, {t:"Camping Date", d:"Under the stars with my Vahali.", s:"Images/camping.jpg"}];
+
+        // 1. GENERATE MOSAICS (Logic Fix: Fixed random seed per tile)
+        function createMosaic(containerId) {
+            const container = document.getElementById(containerId);
+            for(let i=0; i<16; i++) {
+                const img = document.createElement('img');
+                img.className = "mosaic-tile";
+                img.src = imageList[i % imageList.length];
+                img.style.setProperty('--r', Math.random() * 20 - 10);
+                img.style.setProperty('--r2', Math.random() * 20 - 10);
+                container.appendChild(img);
+            }
+        }
+        createMosaic('main-heart');
+        createMosaic('end-heart');
+
+        // 2. INTRO ANIMATION LOGIC
+        window.onload = () => {
+            const arrow = document.getElementById('cupid-arrow');
+            arrow.style.animation = "arrowFly 3s forwards ease-in-out";
+            
+            setTimeout(() => {
+                document.getElementById('intro-text').innerText = "Love Spreading...";
+                document.getElementById('main-heart').style.transform = "scale(0)";
+            }, 2500);
+
+            setTimeout(() => {
+                const overlay = document.getElementById('intro-overlay');
+                overlay.style.opacity = "0";
+                setTimeout(() => overlay.style.display = "none", 1200);
+            }, 3800);
+        };
+
+        // 3. NAVIGATION DOTS (Logic Fix: Intersection Observer)
+        const dotContainer = document.getElementById('dot-container');
+        for(let i=0; i<6; i++) {
+            const d = document.createElement('div');
+            d.className = "heart-dot";
+            d.onclick = () => jump(i);
+            dotContainer.appendChild(d);
         }
 
-        // Valentine Week Logic (With Animation)
-        const vWeek = [
-            {n:"Rose Day", i:"🌹", t:"Vahali, you are the blossom that never fades."},
-            {n:"Propose Day", i:"💍", t:"Every heartbeat says I want you forever."},
-            {n:"Chocolate Day", i:"🍫", t:"The sweetness of my life is you."},
-            {n:"Teddy Day", i:"🧸", t:"Soft and warm, just like our bond."},
-            {n:"Promise Day", i:"🤝", t:"I promise to hold your hand forever."},
-            {n:"Hug Day", i:"🫂", t:"Your hug is my safest place."},
-            {n:"Kiss Day", i:"💋", t:"Sealing our love with a kiss."},
-            {n:"Valentine Day", i:"💝", t:"Happy Valentine's, my Vahali!"}
-        ];
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    const idx = entry.target.id.replace('s', '');
+                    document.querySelectorAll('.heart-dot').forEach((d, i) => {
+                        d.classList.toggle('active', i == idx);
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.slide').forEach(s => observer.observe(s));
+
+        // 4. VALENTINE WEEK
+        const vWeek = [{n:"Rose Day", i:"🌹", t:"Vahali, you are the blossom that never fades."}, {n:"Propose Day", i:"💍", t:"Every heartbeat says I want you forever."}, {n:"Chocolate Day", i:"🍫", t:"The sweetness of my life is you."}, {n:"Teddy Day", i:"🧸", t:"Soft and warm, just like our bond."}, {n:"Promise Day", i:"🤝", t:"I promise to hold your hand forever."}, {n:"Hug Day", i:"🫂", t:"Your hug is my safest place."}, {n:"Kiss Day", i:"💋", t:"Sealing our love with a kiss."}, {n:"Valentine Day", i:"💝", t:"Happy Valentine's, my Vahali!"}];
         let vIdx = 0;
         function nextDay() {
             vIdx = (vIdx + 1) % vWeek.length;
-            const icon = document.getElementById('d-icon');
-            icon.classList.remove('animate-magic');
-            void icon.offsetWidth; // Force reflow
-            icon.innerText = vWeek[vIdx].i;
-            icon.classList.add('animate-magic');
+            document.getElementById('d-icon').innerText = vWeek[vIdx].i;
             document.getElementById('d-name').innerText = vWeek[vIdx].n;
             document.getElementById('d-text').innerText = vWeek[vIdx].t;
         }
 
-        // Journey Setup
+        // 5. GALLERY LOGIC
+        function checkPass() {
+            if(document.getElementById('passInput').value === "\\vahalu") {
+                document.getElementById('lock-screen').classList.add('hidden');
+                document.getElementById('gallery-content').classList.remove('hidden');
+                const mBtnContainer = document.getElementById('m-btns');
+                mems.forEach(m => {
+                    const b = document.createElement('button');
+                    b.className = "day-tab"; b.innerText = m.t; b.style.padding = "10px";
+                    b.onclick = () => {
+                        const img = document.getElementById('m-img');
+                        img.style.opacity = "0";
+                        setTimeout(() => {
+                            img.src = m.s;
+                            document.getElementById('m-title').innerText = m.t;
+                            document.getElementById('m-desc').innerText = m.d;
+                            img.style.opacity = "1";
+                        }, 400);
+                    }
+                    mBtnContainer.appendChild(b);
+                });
+                document.getElementById('m-desc').innerText = mems[0].d;
+            }
+        }
+
+        // 6. JOURNEY LOGIC
         const jGrid = document.getElementById('j-grid');
-        journeyData.forEach((item) => {
-            const btn = document.createElement('div');
-            btn.className = `day-tab ${item.d === 41 ? 'active' : ''}`;
-            btn.innerHTML = `<span class="d-lbl">Day</span><span class="d-num">${item.d}</span>`;
-            btn.onclick = () => {
-                document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById('j-title').innerText = `Day ${item.d} Summary`;
+        journeyData.forEach(item => {
+            const d = document.createElement('div');
+            d.className = `day-tab ${item.d === 41 ? 'active' : ''}`;
+            d.innerText = item.d;
+            d.onclick = () => {
+                document.querySelectorAll('.day-tab').forEach(x => x.classList.remove('active'));
+                d.classList.add('active');
+                document.getElementById('j-title').innerText = `Day ${item.d}`;
                 document.getElementById('j-desc').innerText = item.s;
-            };
-            jGrid.appendChild(btn);
+            }
+            jGrid.appendChild(d);
         });
         document.getElementById('j-desc').innerText = journeyData[40].s;
 
-        // General Functions
-        function checkPass() {
-            if(document.getElementById('passInput').value === "vahalu") {
-                document.getElementById('lock-screen').classList.add('hidden');
-                document.getElementById('gallery-content').classList.remove('hidden');
-                initGallery();
-            } else { alert("Try again, Vahali!"); }
-        }
-        function jump(i) { document.querySelectorAll('.slide')[i].scrollIntoView({behavior:'smooth'}); }
-        function dodge() { 
-            const b = document.getElementById('no-btn'); 
-            b.style.left = Math.random()*150+'px'; 
-            b.style.top = Math.random()*100+'px'; 
-        }
+        // ANIMATION HELPER
+        function jump(i) { document.getElementById('s'+i).scrollIntoView({behavior:'smooth'}); }
+        function dodge() { const b = document.getElementById('no-btn'); b.style.left = Math.random()*150+'px'; b.style.top = Math.random()*100+'px'; }
 
-        // Background Hearts
+        // CANVAS PARTICLES
         const canvas = document.getElementById('bg-stage');
         const ctx = canvas.getContext('2d');
         let h_arr = [];
         function resize() { canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
         window.onresize = resize; resize();
-        class H { constructor() { this.reset(); } reset() { this.x=Math.random()*canvas.width; this.y=canvas.height+20; this.s=Math.random()*15+10; this.sp=Math.random()*1+0.5; this.a=Math.random()*0.3; } u() { this.y-=this.sp; if(this.y < -20) this.reset(); } d() { ctx.fillStyle=`rgba(255, 77, 109, ${this.a})`; ctx.font=`${this.s}px serif`; ctx.fillText('❤', this.x, this.y); } }
-        for(let i=0; i<15; i++) h_arr.push(new H());
+        class H { constructor() { this.reset(); } reset() { this.x=Math.random()*canvas.width; this.y=canvas.height+20; this.s=Math.random()*15+8; this.sp=Math.random()*1+0.5; this.a=Math.random()*0.3; } u() { this.y-=this.sp; if(this.y < -20) this.reset(); } d() { ctx.fillStyle=`rgba(255, 77, 109, ${this.a})`; ctx.font=`${this.s}px serif`; ctx.fillText('❤', this.x, this.y); } }
+        for(let i=0; i<20; i++) h_arr.push(new H());
         function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); h_arr.forEach(h=>{h.u(); h.d();}); requestAnimationFrame(anim); }
         anim();
-
-        window.onscroll = () => {
-            const dots = document.querySelectorAll('.heart-dot');
-            document.querySelectorAll('.slide').forEach((s, i) => { if(window.scrollY >= s.offsetTop - 300) { dots.forEach(d => d.classList.remove('active')); dots[i].classList.add('active'); } });
-        };
     </script>
 </body>
 </html>
